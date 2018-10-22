@@ -22,6 +22,7 @@ ModuleSceneKen::ModuleSceneKen(bool start_enabled) : Module(start_enabled)
 	// TODO 2 : setup the foreground (red ship) with
 	// coordinates x,y,w,h from ken_stage.png
 
+
 	// Background / sky
 	background.x = 72;
 	background.y = 208;
@@ -36,6 +37,7 @@ ModuleSceneKen::ModuleSceneKen(bool start_enabled) : Module(start_enabled)
 
 	// TODO 4: Setup Girl Animation from coordinates from ken_stage.png
 
+
 }
 
 ModuleSceneKen::~ModuleSceneKen()
@@ -49,8 +51,11 @@ bool ModuleSceneKen::Start()
 	graphics = App->textures->Load("ken_stage.png");
 
 	// TODO 7: Enable the player module
+
+
 	// TODO 0: trigger background music
-	
+	App->audio->PlayMusic("ken.ogg");
+	/**/
 	return true;
 }
 
@@ -72,6 +77,7 @@ update_status ModuleSceneKen::Update()
 
 	// Draw everything --------------------------------------
 	// TODO 1: Tweak the movement speed of the sea&sky + flag to your taste
+	
 	App->renderer->Blit(graphics, 0, 0, &background, 1.0f); // sea and sky
 	App->renderer->Blit(graphics, 560, 8, &(flag.GetCurrentFrame()), 1.0f); // flag animation
 
