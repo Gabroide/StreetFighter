@@ -23,6 +23,8 @@ public:
 	SDL_Rect ground;
 	SDL_Rect background;
 	Animation flag;
+	//Animation ship;//
+	SDL_Rect ship;
 };
 
 #endif // __MODULESCENEKEN_H__
