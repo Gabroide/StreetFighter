@@ -30,13 +30,13 @@ ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 	backward.speed = 0.1f;
 
 	// TODO 8: setup the walk forward animation from ryu4.png
-	/*forward.frames.push_back({ 542, 131, 61, 87 });
-	forward.frames.push_back({ 628, 129, 59, 90 });
-	forward.frames.push_back({ 713, 128, 57, 90 });
-	forward.frames.push_back({ 797, 127, 57, 90 });
-	forward.frames.push_back({ 883, 128, 58, 91 });
-	forward.frames.push_back({ 974, 129, 57, 89 });
-	forward.speed = 0.1f;*/
+	forward.frames.push_back({ 0, 131, 65, 90 });
+	forward.frames.push_back({ 75, 129, 63, 90 });
+	forward.frames.push_back({ 160, 128, 65, 90 });
+	forward.frames.push_back({ 255, 127, 65, 90 });
+	forward.frames.push_back({ 340, 128, 65, 91 });
+	forward.frames.push_back({ 425, 129, 62, 90 });
+	forward.speed = 0.1f;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -50,6 +50,8 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 	graphics = App->textures->Load("ryu4.png"); // arcade version
+	ryuPos = (SCREEN_WIDTH / 8) - App->renderer->camera.x * 0.5f;
+	timer = 0;
 
 	return true;
 }
@@ -70,6 +72,38 @@ update_status ModulePlayer::Update()
 	// TODO 9: Draw the player with its animation
 	// make sure to detect player movement and change its
 	// position while cycling the animation(check Animation.h)
+	DrawingPlayer();
 
 	return UPDATE_CONTINUE;
+}
+
+void ModulePlayer::DrawingPlayer()
+{
+	//ryu controls
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		if (ryuPos > LEFT_BOUND)
+			ryuPos -= speedPlayer * 0.5f;
+		if (ryuPos <= (SCREEN_WIDTH / 4) - App->renderer->camera.x * 0.5f)
+			App->renderer->camera.x += speedPlayer;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		if (ryuPos < -RIGHT_BOUND)
+			ryuPos += speedPlayer * 0.5f;
+		if (ryuPos >= (SCREEN_WIDTH / 4) - App->renderer->camera.x * 0.5f)
+			App->renderer->camera.x -= speedPlayer;
+	}
+	if (ryuPos < lastX) // moving forward
+	{
+		App->renderer->Blit(graphics, ryuPos, 120, &(forward.GetCurrentFrame()));
+	}
+	else if (ryuPos > lastX) // moving backward
+	{
+		App->renderer->Blit(graphics, ryuPos, 120, &(backward.GetCurrentFrame()));
+	}
+	else { //idle
+		App->renderer->Blit(graphics, ryuPos, 120, &(idle.GetCurrentFrame()));
+	}
+	lastX = ryuPos;
 }

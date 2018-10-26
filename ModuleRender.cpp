@@ -50,19 +50,18 @@ update_status ModuleRender::PreUpdate()
 update_status ModuleRender::Update()
 {
 	// debug camera
-	int speed = 1;
-
+	int speedMove = 1;
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->renderer->camera.y += speed;
+		App->renderer->camera.y += speedMove;
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->renderer->camera.y -= speed;
+		App->renderer->camera.y -= speedMove;
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->renderer->camera.x += speed;
+		App->renderer->camera.x += speedMove;
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->renderer->camera.x -= speed;
+		App->renderer->camera.x -= speedMove;
 
 	return UPDATE_CONTINUE;
 }
@@ -92,6 +91,11 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 {
 	bool ret = true;
 	SDL_Rect rect;
+
+	//Bounds contraints
+	if (camera.x > LEFT_BOUND) camera.x = LEFT_BOUND;
+	if (camera.x < RIGHT_BOUND) camera.x = RIGHT_BOUND;
+
 	rect.x = (int)(camera.x * speed) + x * SCREEN_SIZE;
 	rect.y = (int)(camera.y * speed) + y * SCREEN_SIZE;
 

@@ -16,13 +16,15 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+	bool transition = true;
 
+	
 public:
 	
 	SDL_Texture* graphics = nullptr;
 	SDL_Rect ground;
 	SDL_Rect background;
-	SDL_Rect ship;
+	SDL_Rect red_ship;
 	Animation flag;
 	Animation girl;
 };

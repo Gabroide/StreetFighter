@@ -1,0 +1,3 @@
+﻿  ModuleSceneHonda.cpp
+c:\users\gabriel\source\repos\sdl game 2 - master - handout\modulescenehonda.cpp(95): warning C4305: 'argument': truncation from 'double' to 'float'
+  SDL Game.vcxproj -> C:\Users\Gabriel\source\repos\SDL Game 2 - Master - Handout\Debug\SDL Game - Master 1 Handout.exe
